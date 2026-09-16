@@ -1,0 +1,325 @@
+/* ============================================================
+   Portfolio — dark, high contrast
+   Plain CSS. No build step, no dependencies.
+   ============================================================ */
+
+:root {
+  color-scheme: dark;
+
+  --bg:            #0b0d10;
+  --surface:       #14181d;
+  --surface-hover: #1c2229;
+  --border:        #2b333c;
+  --text:          #f2f5f8;
+  --text-muted:    #a9b4c0;
+  --accent:        #5ee6a8;
+  --accent-text:   #04150d;
+  --focus:         #ffd24a;
+
+  --measure: 68ch;
+  --page-max: 72rem;
+  --radius: 12px;
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  --step-3: clamp(2.2rem, 1.6rem + 2.8vw, 3.75rem);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-gutter: stable;
+}
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+img, svg, video { display: block; max-inline-size: 100%; block-size: auto; }
+
+/* ---------- Links and focus ---------- */
+
+a { color: var(--accent); text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: -4rem;
+  inset-inline-start: 1rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  transition: inset-block-start 150ms ease;
+}
+.skip-link:focus-visible { inset-block-start: 0; }
+
+/* ---------- Page shell ---------- */
+
+.site-header,
+main,
+.site-footer {
+  inline-size: min(100% - 2.5rem, var(--page-max));
+  margin-inline: auto;
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: safe center;
+  gap: 1rem 2rem;
+  padding-block: 1.5rem;
+  border-block-end: 1px solid var(--border);
+}
+
+.wordmark {
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-header nav { margin-inline-start: auto; }
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-list a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+.nav-list a:hover { color: var(--accent); }
+
+/* ---------- Sections ---------- */
+
+main > section { padding-block: clamp(3rem, 8vw, 5.5rem); }
+main > section + section { border-block-start: 1px solid var(--border); }
+
+h1, h2, h3 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin-block: 0 0.5em;
+}
+
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+p { max-inline-size: var(--measure); text-wrap: pretty; }
+
+/* ---------- Hero ---------- */
+
+.hero { padding-block-start: clamp(3rem, 10vw, 6rem); }
+
+.eyebrow {
+  margin-block: 0 0.75rem;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lede {
+  font-size: var(--step-1);
+  color: var(--text-muted);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-inline-size: none;
+  margin-block-start: 2rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background-color: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.button:hover { background-color: var(--surface-hover); border-color: var(--accent); }
+
+.button-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+.button-primary:hover { background-color: #7df0bd; border-color: #7df0bd; }
+
+/* ---------- Skills ---------- */
+
+.skill-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
+  margin-block-start: 2rem;
+}
+
+.skill-group h3 { margin-block-end: 0.75rem; }
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag-list li {
+  display: flex;
+  align-items: safe center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background-color: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ---------- Icons ---------- */
+
+/* The sprite holds the symbols. It must never be visible or focusable. */
+.sprite { display: none; }
+
+.icon {
+  inline-size: 1.1em;
+  block-size: 1.1em;
+  flex: none;
+  fill: currentColor;
+}
+
+.icon-lg {
+  inline-size: 1.6rem;
+  block-size: 1.6rem;
+}
+
+/* The brand color appears on hover, so the resting state stays readable. */
+.tag-list li:hover .icon,
+.link-card:hover .icon { color: var(--accent); }
+
+/* ---------- Project cards ---------- */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  grid-template-rows: auto 1fr auto;
+  gap: 1.5rem;
+  margin-block-start: 2rem;
+}
+
+.card {
+  grid-row: span 3;
+  display: grid;
+  /* Same-cascade fallback for browsers without subgrid. */
+  grid-template-rows: auto 1fr auto;
+  grid-template-rows: subgrid;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.card:hover { border-color: var(--accent); background-color: var(--surface-hover); }
+
+.card-title { margin: 0; }
+.card-title a { text-decoration: none; }
+.card-title a:hover { text-decoration: underline; }
+
+.card-body { margin: 0; color: var(--text-muted); max-inline-size: none; }
+
+.card-tags { align-self: end; }
+
+/* ---------- Contact ---------- */
+
+.link-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin-block-start: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.link-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: safe center;
+  gap: 0.1rem 0.9rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.link-card:hover { border-color: var(--accent); background-color: var(--surface-hover); }
+
+.link-card .icon { grid-row: span 2; }
+
+.link-name { font-weight: 700; }
+
+.link-handle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  padding-block: 2rem 3rem;
+  border-block-start: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.site-footer p { max-inline-size: none; margin: 0; }
